@@ -11,28 +11,36 @@ function Accordian() {
     setSelected(getCurrentId === selected ? null : getCurrentId);
   }
 
-  function handleMultiSelection(getCurrentId){
+  function handleMultiSelection(getCurrentId) {
     let copyMultiple = [...multiple];
 
     const findIndexOfCurrentId = copyMultiple.indexOf(getCurrentId);
-    if(findIndexOfCurrentId===-1)
-    copyMultiple.push(getCurrentId)
-    else
-    copyMultiple.splice(findIndexOfCurrentId,1);
+    if (findIndexOfCurrentId === -1) copyMultiple.push(getCurrentId);
+    else copyMultiple.splice(findIndexOfCurrentId, 1);
 
-    setMultiple(copyMultiple)
+    setMultiple(copyMultiple);
   }
 
   return (
     <div className={styles.wrapper}>
-      <button onClick={() => setEnableMultiSelction(!enableMultiSelction)}>
+      <button
+        onClick={() => {
+          setEnableMultiSelction(!enableMultiSelction);
+          setSelected(null);
+          setMultiple([]);
+        }}
+      >
         Enable Multiselection
       </button>
       <div className={styles.accordian}>
         {data && data.length > 0 ? (
           data.map((dataItem) => (
             <div
-              onClick={enableMultiSelction? ()=> handleMultiSelection(dataItem.id) : () => handleSingleSelection(dataItem.id)}
+              onClick={
+                enableMultiSelction
+                  ? () => handleMultiSelection(dataItem.id)
+                  : () => handleSingleSelection(dataItem.id)
+              }
               className={styles.item}
               key={dataItem.id}
             >
